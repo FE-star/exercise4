@@ -4,7 +4,8 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 箭头函数绑定了obj
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -15,7 +16,8 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      // 函数声明this绑定全局的global对象
+      this.should.equal(global)
     }
     test()
   })
@@ -23,11 +25,14 @@ describe('this', function () {
   describe('bind', function () {
     it('bind undefined', function () {
       var obj = {
+        // say函数后边多了一个调用 这种情况下 say相当于函数声明
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            this.should.equal(global)
           }
+          // 在这里obj由于刚被创建后初始化为undefined 还没有赋值
+          // 所以绑定失败 自动找到外层兜底的global
           return _say.bind(obj)
         }()
       }
@@ -39,8 +44,9 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
+        // 遇上一种情况不同 此时obj已经完成赋值 所以绑定成功
         return _say.bind(obj)
       }()
       obj.say()
