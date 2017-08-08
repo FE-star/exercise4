@@ -46,7 +46,7 @@ describe('this', function () {
           // this 是什么？想想为什么？
           this.should.equal(obj)
         }
-        // 遇上一种情况不同 此时obj已经完成赋值 所以绑定成功
+        // 与上一种情况不同 此时obj已经完成赋值 所以绑定成功
         return _say.bind(obj)
       }()
       obj.say()
