@@ -1,3 +1,4 @@
+var global = global;
 describe('this', function () {
     it('setTimeout', function (done) {
         var obj = {
