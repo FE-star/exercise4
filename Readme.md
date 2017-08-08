@@ -1,6 +1,7 @@
 # 练习4
 
 ![Coverage Status](https://www.travis-ci.org/allenYetu211/exercise4.svg?branch=master)
+---
 
 ### 目标
 
