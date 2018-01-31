@@ -26,7 +26,7 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(window)
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
