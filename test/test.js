@@ -4,7 +4,7 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(obj)
+          this.should.equal(obj) // arrow function
           done()
         }, 0)
       }
@@ -15,7 +15,7 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(global)
+      this.should.equal(global) // in its scope, is global in node env
     }
     test()
   })
@@ -28,7 +28,7 @@ describe('this', function () {
             // this 是什么？想想为什么？
             this.should.equal(global)
           }
-          return _say.bind(obj)
+          return _say.bind(obj) // obj === undefined
         }()
       }
       obj.say()
@@ -39,7 +39,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(obj)
+          this.should.equal(obj) // bind this
         }
         return _say.bind(obj)
       }()
