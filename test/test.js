@@ -3,8 +3,8 @@ describe('this', function () {
     var obj = {
       say: function () {
         setTimeout(() => {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 箭头函数this指定义时上下文环境
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -15,7 +15,7 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      this.should.equal(global)
     }
     test()
   })
@@ -25,8 +25,8 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // this 是什么？想想为什么？
-            this.should.equal(null)
+            // 匿名函数立即执行，obj为undefined，则绑定在global
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -39,7 +39,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
