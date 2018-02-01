@@ -30,7 +30,7 @@ describe('this', function () {
             this.should.equal(global)
           }
           // console.log(obj)
-          // 函数会被提升并立即执行，测试obj为undefined，bing()传入undefined的话相当于传入global。
+          // 函数会被提升并立即执行，此时obj为undefined，bing()传入undefined的话相当于传入global。
           // 所以this===global
           return _say.bind(obj)
         }()
