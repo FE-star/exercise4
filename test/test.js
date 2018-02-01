@@ -4,7 +4,8 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 因为箭头函数
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -15,7 +16,7 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      this.should.equal(global)
     }
     test()
   })
@@ -26,8 +27,11 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            this.should.equal(global)
           }
+          // console.log(obj)
+          // 函数会被提升并立即执行，测试obj为undefined，bing()传入undefined的话相当于传入global。
+          // 所以this===global
           return _say.bind(obj)
         }()
       }
@@ -39,7 +43,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
