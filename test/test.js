@@ -4,7 +4,7 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj);  //箭头函数里面的this会指向它外层最近一层this
           done()
         }, 0)
       }
@@ -15,7 +15,7 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      this.should.equal(global);  //直接在全局环境下调用,为什么不是window？？
     }
     test()
   })
@@ -26,7 +26,7 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            this.should.equal(global);  //this指向的是obj的this也就是window
           }
           return _say.bind(obj)
         }()
@@ -39,7 +39,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj);  //这个不知道为什么
         }
         return _say.bind(obj)
       }()
