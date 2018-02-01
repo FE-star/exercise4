@@ -25,6 +25,8 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
+            // bind 发生的时候，bind 的第一个参数如果是 undefined 或 null，this将指向全局
+            // 严格模式下，this 为 undefined；非严格模式下，this为 window 或 global
             this.should.equal(global)
           }
           return _say.bind(obj)
@@ -37,6 +39,7 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
+          // bind 发生的时候，bind 的第一个参数为非空对象（或 number、string），this就指向这个对象
           this.should.equal(obj)
         }
         return _say.bind(obj)
