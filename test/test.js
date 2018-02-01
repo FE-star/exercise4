@@ -3,19 +3,19 @@ describe('this', function () {
     var obj = {
       say: function () {
         setTimeout(() => {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          //箭头函数this指向外部，也就是obj
+          this.should.equal(obj)
           done()
         }, 0)
       }
     }
     obj.say()
-  }) 
+  })
 
   it('global', function () {
     function test() {
-      // this 是什么？想想为什么？
-      this.should.equal(null)
+      //默认this是全局对象 也就是global
+      this.should.equal(global)
     }
     test()
   })
@@ -25,9 +25,11 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // this 是什么？想想为什么？
-            this.should.equal(null)
+            //this为global
+            //
+            this.should.equal(global)
           }
+          // obj为undefined ,所以this依然为global
           return _say.bind(obj)
         }()
       }
@@ -38,9 +40,9 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
+        //bind时候obj为{}
         return _say.bind(obj)
       }()
       obj.say()
