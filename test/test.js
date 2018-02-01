@@ -4,18 +4,24 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 因为用了es6的箭头函数所以会为函数自动绑定this，也就是obj
+          this.should.equal(obj)
           done()
         }, 0)
+        // 如果使用普通的话那么this自然就是指向t
+        /* var t = setTimeout(function () {
+          this.should.equal(t);
+          done()
+        }, 0) */
       }
     }
     obj.say()
-  }) 
+  })
 
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      this.should.equal(global)
     }
     test()
   })
@@ -26,7 +32,7 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -38,8 +44,9 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
+          console.log(this);
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
