@@ -4,7 +4,8 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 当前的执行环境是 obj
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -15,7 +16,9 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      // this 在 node下是 global 
+      //  在浏览器里面是 window
+      this.should.equal(global)
     }
     test()
   })
@@ -26,7 +29,8 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            // 这个是时候的 obj 是undefined 所以是global/window 
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -39,7 +43,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
