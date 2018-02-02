@@ -9,8 +9,8 @@ before_indstall:
  - npm -v
 
 install: 
-  - npm install -g karam-cli
+  - npm install -g karma-cli
   - npm install
-  
+
 script: 
   - npm test
