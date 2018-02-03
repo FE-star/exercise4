@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/wknhsj/exercise4.svg?branch=master)](https://travis-ci.org/wknhsj/exercise4)
 # 练习4
 
 ### 目标

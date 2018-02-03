@@ -4,18 +4,18 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)//因为箭头函数声明的时候会绑定当时的作用域，不会指向调用者。
           done()
         }, 0)
       }
     }
     obj.say()
-  }) 
+  })
 
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      this.should.equal(global)//这个算是全局(global)调用
     }
     test()
   })
@@ -26,12 +26,12 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            this.should.equal(global)
           }
-          return _say.bind(obj)
+          return _say.bind(obj)//此时obj为undefined
         }()
       }
-      obj.say()
+      obj.say();
     })
 
     it('bind normal', function () {
@@ -39,9 +39,9 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
-        return _say.bind(obj)
+        return _say.bind(obj)//此时的obj已经声明了
       }()
       obj.say()
     })
