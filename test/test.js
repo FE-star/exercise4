@@ -28,7 +28,7 @@ describe('this', function () {
             // this 是什么？想想为什么？
             this.should.equal(global)
           }
-          return _say.bind(obj)
+          return _say.bind(obj)//因为bind的时候obj是个undefined
         }()
       }
       obj.say()
