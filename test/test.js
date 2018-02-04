@@ -4,7 +4,8 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
+          // 箭头函数的this指向上层作用域
           done()
         }, 0)
       }
@@ -15,7 +16,8 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      this.should.equal(global)
+      // macha在node里运行的，所以全局对象是global
     }
     test()
   })
@@ -26,7 +28,8 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            this.should.equal(global)
+            // _say.bind(obj)时obj还未定义，此时obj为undefined，bind函数会默认绑定到window上
           }
           return _say.bind(obj)
         }()
@@ -39,7 +42,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
