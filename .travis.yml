@@ -1,5 +1,5 @@
 before_script:
- - npm install -g mocha
+  - npm install mocha -g
   - npm install
 language: node_js
 
