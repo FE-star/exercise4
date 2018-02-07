@@ -6,7 +6,7 @@ describe('this', function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
           // this.should.equal(null)
-          this.should.equal(obj)//谁调用say方法 this指的就是谁
+          this.should.equal(obj)//* ES6中箭头函数，this指向是根据定义时所在的对象，这是固定的不可变的
           done()
         }, 0)
       }
