@@ -28,8 +28,8 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            // 这里返回了一个bind函数，绑定了obj，所以this指向了obj 
-            this.should.equal(obj)
+            // 因为obj尚在声明，而obj还没有声明结束就使用。所以是undefined
+            this.should.equal(undefined)
           }
           return _say.bind(obj)
         }()
@@ -42,6 +42,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
+          // 而且obj已经赋值为一个对象了
           // 这里返回了一个bind函数，绑定了obj，所以this指向了obj 
           this.should.equal(obj)
         }
