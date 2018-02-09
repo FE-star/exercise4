@@ -3,8 +3,9 @@ describe('this', function () {
     var obj = {
       say: function () {
         setTimeout(() => {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          //  this 是什么？想想为什么？global
+          //  箭头函数this是指向当前函数的作用域
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -14,9 +15,10 @@ describe('this', function () {
 
   it('global', function () {
     function test() {
-      // this 是什么？想想为什么？
-      this.should.equal(null)
+      // this 是什么？想想为什么？global
+      this.should.equal(global)
     }
+    //  在node全局调用了，所以this指向global。浏览器则是window
     test()
   })
 
@@ -26,7 +28,8 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            // 这里返回了一个bind函数，绑定了obj，所以this指向了obj 
+            this.should.equal(obj)
           }
           return _say.bind(obj)
         }()
@@ -39,7 +42,8 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 这里返回了一个bind函数，绑定了obj，所以this指向了obj 
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
