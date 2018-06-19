@@ -4,7 +4,7 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(this)
+          this.should.equal(obj)
           done()
         }, 0)
       }
