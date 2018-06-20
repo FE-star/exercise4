@@ -3,8 +3,8 @@ describe('this', function () {
     var obj = {
       say: function () {
         setTimeout(() => {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 箭头函数this指向上一级，即obj.say()的this指向
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -13,9 +13,9 @@ describe('this', function () {
   }) 
 
   it('global', function () {
-    function test() {
-      // this 是什么？想想为什么？
-      this.should.equal(null)
+    function test() { 
+      // default binding, 非strict mode下为global
+      this.should.equal(global)
     }
     test()
   })
@@ -25,8 +25,8 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // this 是什么？想想为什么？
-            this.should.equal(null)
+            // 立即调用函数执行时，obj只是被声明，并未赋值，相当与_say.bind(undefined)
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -38,8 +38,8 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 正常调用bind，指向obj
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
