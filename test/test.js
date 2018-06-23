@@ -3,8 +3,8 @@ describe('this', function () {
     var obj = {
       say: function () {
         setTimeout(() => {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 箭头函数，继承父级执行上下文的this 所以是obj
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -14,8 +14,8 @@ describe('this', function () {
 
   it('global', function () {
     function test() {
-      // this 是什么？想想为什么？
-      this.should.equal(null)
+      // 在全局中调用，this执行全局
+      this.should.equal(global)
     }
     test()
   })
@@ -25,9 +25,12 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // this 是什么？想想为什么？
-            this.should.equal(null)
+            //虽然_say函数用bind改变了this指向obj，
+            //但是say是立即执行函数，（函数声明优先于变量声明，变量先创建一个空的变量，在赋值）
+            //在obj声明的时候say已经执行了，但是obj还没赋值所以是undefined = global
+            this.should.equal(global)
           }
+          console.log(obj)
           return _say.bind(obj)
         }()
       }
@@ -38,8 +41,9 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 虽然也是立即执行函数，obj.say赋值为fun，
+          // 不是函数声明，因此按照顺序obj先赋值{}，obj.say再赋值fun。bind指向到了obj
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
