@@ -31,9 +31,9 @@ describe('this', function () {
   describe('bind', function () {
     it('bind undefined', function () {
       var obj = {
-        // 初始化语句拆分
+        // 声明赋值语句拆分
         // var obj
-        // obj = {} //这步赋值操作的值对象的求值过程依赖的obj的值，而obj的值是undefined，所以bind了undefined
+        // obj = {这个对象就是33行大括号开始的那个对象，这个对象里面的求值，obj的值是undefined} 
         say: function () {
           console.log('=========', obj)
           function _say() {
