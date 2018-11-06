@@ -4,8 +4,10 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          // 这里若不使用剪头函数，普通匿名函数的话, 在此场景下，this 为 Timeout
-          // ref https://nodejs.org/dist/latest-v11.x/docs/api/timers.html#timers_class_timeout
+          /**
+           * 这里若不使用箭头函数，普通匿名函数的话, 在此场景下，this 为 Timeout
+           * ref https://nodejs.org/dist/latest-v11.x/docs/api/timers.html#timers_class_timeout
+           */
           this.should.equal(obj)
           done()
         }, 0)
