@@ -11,7 +11,7 @@
 - https://github.com/FE-star/2018.10/issues/3
 
 ### 另外一些参考
-
+- [timers_class_timeout](https://nodejs.org/dist/latest-v11.x/docs/api/timers.html#timers_class_timeout)
 - [wa-use-javascript-closures-efficiently](https://www.ibm.com/developerworks/cn/web/wa-use-javascript-closures-efficiently/index.html)
 - [closures-are-not-magic](http://renderedtext.com/blog/2015/11/18/closures-are-not-magic/)
 - [what-is-this-in-javascript](https://developer.telerik.com/topics/web-development/what-is-this-in-javascript/amp/)
