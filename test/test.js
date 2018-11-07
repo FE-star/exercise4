@@ -4,7 +4,8 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // xbh: obj调用的say，say函数内this = obj；箭头函数内this = 父函数this， so
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -15,7 +16,8 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      // xbh：test函数是独立调用，严格模式下该函数内this = undefined, 非严格模式下this = window/global(浏览器／nodejs)
+      this.should.equal(global)
     }
     test()
   })
@@ -26,7 +28,8 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            // TODO
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -39,7 +42,8 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // TODO
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
