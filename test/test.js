@@ -30,7 +30,7 @@ describe('this', function () {
             // this 是什么？想想为什么？
             // this 是 undefined 因为bind修改_say函数的作用域的时候，obj声明了但还没有赋值
             // 复制表达式是从右往左执行，say的立即执行函数执行时，会给_say bind obj，但这时候obj没有值
-            // 即obj = undefined，于是this只想node的全局对象global
+            // 即obj = undefined，于是this指向node的全局对象global
             this.should.equal(global)
           }
           return _say.bind(obj)
