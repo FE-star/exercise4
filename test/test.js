@@ -4,7 +4,8 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 箭头函数关联父级作用域
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -15,9 +16,10 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      //在浏览器 JavaScript 中，通常 window 是全局对象， 而 Node.js 中的全局对象是 global	
+      this.should.equal(global)
     }
-    test()
+    test()       //global.test()
   })
 
   describe('bind', function () {
@@ -26,7 +28,7 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -39,7 +41,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
