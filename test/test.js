@@ -4,6 +4,7 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
+          // 使用了箭头函数，this指向父类作用域
           this.should.equal(obj);
           done();
         }, 0)
@@ -15,6 +16,7 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
+      // this 是默认绑定全局作用域，node里是global
       this.should.equal(global);
     }
     test()
@@ -26,7 +28,8 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(global)
+            // say是立即执行函数，所以obj此时是undefined，所以this指向全局作用域
+            this.should.equal(global);
           }
           return _say.bind(obj)
         }()
@@ -39,6 +42,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
+          //进行了硬绑定，所以this指向obj
           this.should.equal(obj)
         }
         return _say.bind(obj)
