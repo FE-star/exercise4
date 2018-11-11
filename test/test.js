@@ -25,7 +25,7 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // 运行时决定了作用域
+            // 复制运算是先执行左边，执行过程中，立即执行，立即执行时，由于声明提升，ogj 还是undefined.
             this.should.equal(global)
           }
           return _say.bind(obj)
