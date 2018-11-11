@@ -3,8 +3,9 @@ describe('this', function () {
     var obj = {
       say: function () {
         setTimeout(() => {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 调用方式 obj.say()
+          // 调用栈上的一个对象是obj
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -14,8 +15,8 @@ describe('this', function () {
 
   it('global', function () {
     function test() {
-      // this 是什么？想想为什么？
-      this.should.equal(null)
+      // test() 直接调用，绑定到全局对象
+      this.should.equal(global)
     }
     test()
   })
@@ -25,8 +26,10 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // this 是什么？想想为什么？
-            this.should.equal(null)
+            // var obj 声明提升
+            // obj 的初始化赋值操作中，_say.bind(obj) 读取到的obj的值是undefined
+            // 最终 obj.say = _say.bind(undefined)
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -38,8 +41,9 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 1. 硬绑定到了obj
+          // 2. 即使没有bind， 以obj.say()方式调用，this也是指向obj
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
