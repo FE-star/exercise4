@@ -4,7 +4,7 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -15,7 +15,7 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      this.should.equal(global)
     }
     test()
   })
@@ -25,8 +25,8 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // this 是什么？想想为什么？
-            this.should.equal(null)
+            // 立即执行函数在执行的时候obj还没有被初始化，还是undefined，所以此时应该是global
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -38,8 +38,8 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 此时obj已经被初始化为对象
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
