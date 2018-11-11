@@ -3,8 +3,8 @@ describe('this', function () {
     var obj = {
       say: function () {
         setTimeout(() => {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 箭头函数执行的是词法作用域
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -14,8 +14,8 @@ describe('this', function () {
 
   it('global', function () {
     function test() {
-      // this 是什么？想想为什么？
-      this.should.equal(null)
+      // 默认绑定，没有指定运行环境，指向全局
+      this.should.equal(global)
     }
     test()
   })
@@ -25,8 +25,8 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // this 是什么？想想为什么？
-            this.should.equal(null)
+            // 运行时决定了作用域
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -38,8 +38,8 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 硬绑定，指向bind绑定的值
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
