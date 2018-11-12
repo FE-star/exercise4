@@ -4,7 +4,7 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          //根据调用点而不是函数声明的地方，因为调用的对象是obj，所以此处this指向调用的对象obj,而不是函数声明本身和它的词法作用域
+          //箭头函数会把this强制指向当前对象
           this.should.equal(obj)
           done()
         }, 0)
@@ -28,7 +28,7 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            // 不太理解，这里应该也是硬绑定，为啥不是obj
+            // 和变量声明有关系，此时变量还没有声明完毕，先执行了等号右边的
             this.should.equal(undefined)
             this.should.equal(null)
           }
@@ -43,7 +43,7 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          // 硬绑定，此时的调用点的对象是obj
+          // 变量已经声明完毕，看调用对象
           this.should.equal(obj)
         }
         return _say.bind(obj)
