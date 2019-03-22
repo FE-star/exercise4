@@ -4,7 +4,8 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // this指向say,箭头函数是根据当前的词法作用域来决定this。
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -15,7 +16,8 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      // this指向window，这个是使用了默认绑定，绑定到了全局对象。node环境中为global
+      this.should.equal(global)
     }
     test()
   })
@@ -26,7 +28,8 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            // bind在绑定的对象为undefined的时候，默认是绑定全局对象
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -39,7 +42,8 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          // bind 把this指向了obj
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
