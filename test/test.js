@@ -4,7 +4,8 @@ describe('this', function () {
       say: function () {
         setTimeout(() => {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          //obj
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -15,7 +16,8 @@ describe('this', function () {
   it('global', function () {
     function test() {
       // this 是什么？想想为什么？
-      this.should.equal(null)
+      //node下global
+      this.should.equal(global)
     }
     test()
   })
@@ -26,8 +28,9 @@ describe('this', function () {
         say: function () {
           function _say() {
             // this 是什么？想想为什么？
-            this.should.equal(null)
+            this.should.equal(global)
           }
+          //此处obj为undefined
           return _say.bind(obj)
         }()
       }
@@ -39,8 +42,9 @@ describe('this', function () {
       obj.say = function () {
         function _say() {
           // this 是什么？想想为什么？
-          this.should.equal(null)
+          this.should.equal(obj)
         }
+        //硬绑定
         return _say.bind(obj)
       }()
       obj.say()
