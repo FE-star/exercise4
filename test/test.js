@@ -3,19 +3,19 @@ describe('this', function () {
     var obj = {
       say: function () {
         setTimeout(() => {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 箭头函数中的this指向定义时候的上下文对象
+          this.should.equal(obj)
           done()
         }, 0)
       }
     }
     obj.say()
-  }) 
+  })
 
   it('global', function () {
     function test() {
-      // this 是什么？想想为什么？
-      this.should.equal(null)
+      // this的默认绑定，严格模式下为undefied，否则为全局对象 node中的全局对象为global
+      this.should.equal(global)
     }
     test()
   })
@@ -25,8 +25,9 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // this 是什么？想想为什么？
-            this.should.equal(null)
+            //call 和 bind 可以修改this指向
+            //绑定时候的obj是undefiend，所以this指向了全局变量
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -38,8 +39,8 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // this是obj，bind方法改变了当前的this指向
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
