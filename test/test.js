@@ -3,8 +3,8 @@ describe('this', function () {
     var obj = {
       say: function () {
         setTimeout(() => {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // 箭头函数绑定上下文
+          this.should.equal(obj)
           done()
         }, 0)
       }
@@ -14,8 +14,8 @@ describe('this', function () {
 
   it('global', function () {
     function test() {
-      // this 是什么？想想为什么？
-      this.should.equal(null)
+      // 函数内没有自己的上下文，所以用外面的
+      this.should.equal(global)
     }
     test()
   })
@@ -25,8 +25,8 @@ describe('this', function () {
       var obj = {
         say: function () {
           function _say() {
-            // this 是什么？想想为什么？
-            this.should.equal(null)
+            // iife执行时obj还没创建完成，则为全局
+            this.should.equal(global)
           }
           return _say.bind(obj)
         }()
@@ -38,8 +38,8 @@ describe('this', function () {
       var obj = {}
       obj.say = function () {
         function _say() {
-          // this 是什么？想想为什么？
-          this.should.equal(null)
+          // obj已经存在，再run iife时绑定了
+          this.should.equal(obj)
         }
         return _say.bind(obj)
       }()
